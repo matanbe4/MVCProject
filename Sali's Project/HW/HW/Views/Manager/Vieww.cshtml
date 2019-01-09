@@ -1,0 +1,37 @@
+﻿
+@using HW.Models
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+<div>
+    <table class="EmpTbl" id="empTable">
+        <tr>
+            <td>Employee ID</td>
+            <td>First Name</td>
+            <td>Last Name</td>
+        </tr>
+       
+        
+    </table>
+
+    <script language="javascript">
+        $.get("GetEmployees", null, BindData);
+
+        function BindDate (Employees)
+        {
+            var tbl = ${"#EmpTbl"};
+
+            for(i=0; i<Employees.length ; i++){
+                var newRow = "<tr>"+
+                    "<td>"+i+ "<\td>"+
+                    "<td>"+Employees[i].FirstName + "<\td>"+
+                    "<td>"+Employees[i].LastName + "<\td>"+
+                    "</tr>"
+                tbl.append(newRow);
+
+            }
+        }
+    </script>
+</div>

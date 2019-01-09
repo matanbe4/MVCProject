@@ -1,0 +1,8 @@
+﻿
+@{
+    ViewBag.Title = "SubmitAdd";
+}
+
+<h2>@Model.FirstName @Model.LastName Changes has been Saved!</h2>
+
+@Html.ActionLink("Back To Menu", "ManagMenu", "Manager", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })

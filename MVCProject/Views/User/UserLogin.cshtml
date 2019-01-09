@@ -1,0 +1,40 @@
+﻿@model MVCProject.Models.User
+
+@using MVCProject.Models
+@{
+    ViewBag.Title = "UserLogin";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>User Login</title>
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+</head>
+<body>
+    <h2>Login</h2>
+    <br />
+    <div>
+        @using (Html.BeginForm("SubmitLogin", "User", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td>Username: </td>
+                    <td>@Html.TextBoxFor(m => m.username)</td>
+                </tr>
+                <tr>
+                    <td>Password: </td>
+                    <td>@Html.PasswordFor(m => m.password)</td>
+                </tr>
+            </table>
+            <br />
+            <input id="SubmitLogin" type="submit" value="Login" />
+            <br />
+        }
+    </div>
+</body>
+</html>
