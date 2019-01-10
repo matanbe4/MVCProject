@@ -1,6 +1,7 @@
 ﻿using MVCProject.Dal;
 //using MVCProject.ModelBinders;
 using MVCProject.Models;
+using MVCProject.ViewModel;
 //using MVCProject.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -16,43 +17,6 @@ namespace MVCProject.Controllers
         {
             return View();
         }
-
-        //public ActionResult ShowSearch()
-        //{
-        //    CustomerViewModel cvm = new CustomerViewModel();
-        //    cvm.customer = new Customer();
-        //    cvm.customers = new List<Customer>();
-        //    return View("SearchCustomer", cvm);
-        //}
-
-        //public ActionResult SearchCustomer()
-        //{
-        //    CustomerDal dal = new CustomerDal();
-        //    CustomerViewModel cvm = new CustomerViewModel();
-
-        //    string searchVal = Request.Form["txtFirstName"].ToString();
-        //    List<Customer> objCustomers = (from x in dal.Customers
-        //                                   where x.FirstName.Contains(searchVal)
-        //                                   select x).ToList<Customer>();
-
-        //    Customer objCust = new Customer();
-        //    objCust.FirstName = searchVal;
-        //    cvm.customer = objCust;
-        //    cvm.customers = objCustomers;
-
-        //    return View(cvm);
-
-
-        //}
-
-        //public ActionResult Enter()
-        //{
-        //    CustomerDal dal = new CustomerDal();
-        //    CustomerViewModel cvm = new CustomerViewModel();
-        //    cvm.customer = new Customer();
-        //    cvm.customers = dal.Customers.ToList<Customer>();
-        //    return View(cvm);
-        //}
 
         public ActionResult Register()
         {
@@ -158,6 +122,34 @@ namespace MVCProject.Controllers
                 TempData["LoginStatus"] = "Username or Password are incorrect.";
                 return View("AdminLogin", user);
             }
+        }
+
+        public ActionResult AdminTools()
+        {
+            return View();
+        }
+
+        public ActionResult ManageUsers()
+        {
+            UserViewModel uvm = new UserViewModel();
+            uvm.user = new User();
+            uvm.users = new List<User>();
+            return View("SearchUser", uvm);
+        }
+
+        public ActionResult SearchUser()
+        {
+            UsersDal dal = new UsersDal();
+            UserViewModel uvm = new UserViewModel();
+            string searchVal = Request.Form["username"].ToString();
+            List<User> objUsers = (from x in dal.users
+                                           where x.username.Contains(searchVal)
+                                           select x).ToList<User>();
+            User objUser = new User();
+            objUser.username = searchVal;
+            uvm.user = objUser;
+            uvm.users = objUsers;
+            return View(uvm);
         }
     }
 }

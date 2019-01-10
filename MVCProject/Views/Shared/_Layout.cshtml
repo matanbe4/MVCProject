@@ -29,7 +29,7 @@
                     <li>@Html.ActionLink("Log out", "Logout", "User")</li>
                     @if (Session["userType"] != null && Session["userType"].ToString() == "admin")
                     {
-                        <li>@Html.ActionLink("Show users", "Logout", "User")</li>
+                        <li>@Html.ActionLink("Admin tools", "AdminTools", "User")</li>
                     }
                 </ul>
             </div>

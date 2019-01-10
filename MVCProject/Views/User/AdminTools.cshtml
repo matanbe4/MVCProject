@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "AdminTools";
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Admin Tools</title>
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+</head>
+<body>
+    <h2>Administrator Tools</h2>
+    <br />
+    <div>
+        @using (Html.BeginForm("SubmitAdminLogin", "User", FormMethod.Post))
+        {
+            <h3>To manage list of users, click @Html.ActionLink("Here", "ManageUsers", "User", null)</h3>
+            <br />
+            <h3>To add an administrator user, click @Html.ActionLink("Here", "AddAdmin", "User", null)</h3>
+            <br />
+        }
+    </div>
+</body>
+</html>

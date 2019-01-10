@@ -133,15 +133,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Dal\AdminsDal.cs" />
+    <Compile Include="Dal\ProductsDal.cs" />
     <Compile Include="Dal\UsersDal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -183,9 +187,12 @@
     <Content Include="Views\User\AdminLogin.cshtml" />
     <Content Include="Views\User\Logout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\User\AdminTools.cshtml" />
+    <Content Include="Views\User\SearchUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Shop\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
