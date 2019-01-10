@@ -12,8 +12,6 @@ namespace MVCProject.Controllers
 {
     public class UserController : Controller
     {
-        //
-        // GET: /Customer/
         public ActionResult Index()
         {
             return View();
@@ -106,6 +104,7 @@ namespace MVCProject.Controllers
         {
             Session["loggedOn"] = null;
             Session["LogoutStatus"] = null;
+            Session["userType"] = null;
             return RedirectToAction("Index","Home");
         }
 
