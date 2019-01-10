@@ -2,7 +2,7 @@
 
 @using MVCProject.Models
 @{
-    ViewBag.Title = "UserLogin";
+    ViewBag.Title = "User Login";
 }
 
 <html>
@@ -24,16 +24,19 @@
             <table>
                 <tr>
                     <td>Username: </td>
-                    <td>@Html.TextBoxFor(m => m.username)</td>
+                    <td> @Html.TextBoxFor(m => m.username)</td>
+                    <td>@Html.ValidationMessageFor(x => x.username)</td>
                 </tr>
                 <tr>
                     <td>Password: </td>
-                    <td>@Html.PasswordFor(m => m.password)</td>
+                    <td> @Html.PasswordFor(m => m.password)</td>
+                    <td>@Html.ValidationMessageFor(x => x.password)</td>
                 </tr>
             </table>
             <br />
-            <input id="SubmitLogin" type="submit" value="Login" />
+            <h4 style="color:red">@TempData["LoginStatus"]</h4>
             <br />
+            <input id="SubmitLogin" type="submit" value="Login" />
         }
     </div>
 </body>

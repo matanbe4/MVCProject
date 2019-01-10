@@ -70,18 +70,43 @@ namespace MVCProject.Controllers
                 dal.users.Add(user);
                 dal.SaveChanges();
                 user = new User();
+                return RedirectToAction("Index", "Home");
             }
             return View("Register", user);
         }
 
         public ActionResult UserLogin()
         {
-            return View(new User());
+            if(Session["loggedOn"] == null)
+            {
+                return View(new User());
+            }
+            return RedirectToAction("Logout", "User");
         }
 
         public ActionResult AdminLogin()
         {
+            if (Session["loggedOn"] == null)
+            {
+                return View(new Admin());
+            }
+            return RedirectToAction("Logout", "User");
+        }
+
+        public ActionResult Logout()
+        {
+            if(Session["loggedOn"] == null)
+            {
+                Session["LogoutStatus"] = "No user is logged on.";
+            }
             return View();
+        }
+
+        public ActionResult LogoutAction()
+        {
+            Session["loggedOn"] = null;
+            Session["LogoutStatus"] = null;
+            return RedirectToAction("Index","Home");
         }
 
         public ActionResult SubmitLogin(User user)
@@ -97,9 +122,43 @@ namespace MVCProject.Controllers
                 }
             if (exists == true)
             {
-                
+                Session["username"] = user.username;
+                Session["loggedOn"] = "true";
+                TempData["LoginStatus"] = "";
+                Session["userType"] = "user";
+                return RedirectToAction("Index", "Home");
             }
-            return View("UserLogin", user);
+            else
+            {
+                TempData["LoginStatus"] = "Username or Password are incorrect.";
+                return View("UserLogin", user);
+            }
+        }
+
+        public ActionResult SubmitAdminLogin(Admin user)
+        {
+            AdminsDal dal = new AdminsDal();
+            List<Admin> users = dal.users.ToList<Admin>();
+            bool exists = false;
+            foreach (Admin u in users)
+                if (u.username == user.username && u.password == user.password)
+                {
+                    exists = true;
+                    break;
+                }
+            if (exists == true)
+            {
+                Session["username"] = user.username;
+                Session["loggedOn"] = "true";
+                Session["userType"] = "admin";
+                TempData["LoginStatus"] = "";
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                TempData["LoginStatus"] = "Username or Password are incorrect.";
+                return View("AdminLogin", user);
+            }
         }
     }
 }

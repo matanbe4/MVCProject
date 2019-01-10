@@ -1,7 +1,41 @@
-﻿
+﻿@model MVCProject.Models.Admin
+
+@using MVCProject.Models
 @{
-    ViewBag.Title = "AdminLogin";
+    ViewBag.Title = "Admin Login";
 }
 
-<h2>AdminLogin</h2>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Admin Login</title>
 
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+</head>
+<body>
+    <h2>Administrator Login</h2>
+    <br />
+    <div>
+        @using (Html.BeginForm("SubmitAdminLogin", "User", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td>Username: </td>
+                    <td>@Html.TextBoxFor(m => m.username)</td>
+                </tr>
+                <tr>
+                    <td>Password: </td>
+                    <td>@Html.PasswordFor(m => m.password)</td>
+                </tr>
+            </table>
+            <br />
+            <h4 style="color:red">@TempData["LoginStatus"]</h4>
+            <br />
+            <input id="SubmitAdminLogin" type="submit" value="Login" />
+        }
+    </div>
+</body>
+</html>
