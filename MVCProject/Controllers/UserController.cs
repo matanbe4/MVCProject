@@ -32,15 +32,15 @@ namespace MVCProject.Controllers
         public ActionResult SubmitRegister(User user)
         {
             UsersDal dal = new UsersDal();
-
             if (ModelState.IsValid)
             {
                 try
                 {
                     dal.users.Add(user);
                     dal.SaveChanges();
+                    TempData["LoginStatus"] = null;
                 }
-                catch(DbUpdateException e)
+                catch (DbUpdateException e)
                 {
                     TempData["LoginStatus"] = "Username already exists.";
                     return View("Register", user);
@@ -190,8 +190,17 @@ namespace MVCProject.Controllers
             AdminsDal dal = new AdminsDal();
             if (ModelState.IsValid)
             {
-                dal.users.Add(admin);
-                dal.SaveChanges();
+                try
+                {
+                    dal.users.Add(admin);
+                    dal.SaveChanges();
+                    TempData["LoginStatus"] = null;
+                }
+                catch (DbUpdateException e)
+                {
+                    TempData["LoginStatus"] = "Username already exists.";
+                    return View("AddAdmin", admin);
+                }
                 return RedirectToAction("Index", "Home");
             }
             return View("AddAdmin", admin);
