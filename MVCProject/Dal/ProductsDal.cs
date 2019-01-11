@@ -9,7 +9,7 @@ namespace MVCProject.Dal
 {
     public class ProductsDal : DbContext
     {
-        public DbSet<Product> users { get; set; }
+        public DbSet<Product> products { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

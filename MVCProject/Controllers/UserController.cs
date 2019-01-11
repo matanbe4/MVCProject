@@ -5,9 +5,11 @@ using MVCProject.ViewModel;
 //using MVCProject.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace MVCProject.Controllers
 {
@@ -20,6 +22,10 @@ namespace MVCProject.Controllers
 
         public ActionResult Register()
         {
+            if (Session["userType"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(new User());
         }
 
@@ -29,9 +35,16 @@ namespace MVCProject.Controllers
 
             if (ModelState.IsValid)
             {
-                dal.users.Add(user);
-                dal.SaveChanges();
-                user = new User();
+                try
+                {
+                    dal.users.Add(user);
+                    dal.SaveChanges();
+                }
+                catch(DbUpdateException e)
+                {
+                    TempData["LoginStatus"] = "Username already exists.";
+                    return View("Register", user);
+                }
                 return RedirectToAction("Index", "Home");
             }
             return View("Register", user);
@@ -39,8 +52,9 @@ namespace MVCProject.Controllers
 
         public ActionResult UserLogin()
         {
-            if(Session["loggedOn"] == null)
+            if (Session["loggedOn"] == null)
             {
+                Session["LogoutStatus"] = null;
                 return View(new User());
             }
             return RedirectToAction("Logout", "User");
@@ -50,6 +64,7 @@ namespace MVCProject.Controllers
         {
             if (Session["loggedOn"] == null)
             {
+                Session["LogoutStatus"] = null;
                 return View(new Admin());
             }
             return RedirectToAction("Logout", "User");
@@ -57,7 +72,7 @@ namespace MVCProject.Controllers
 
         public ActionResult Logout()
         {
-            if(Session["loggedOn"] == null)
+            if (Session["loggedOn"] == null)
             {
                 Session["LogoutStatus"] = "No user is logged on.";
             }
@@ -69,7 +84,7 @@ namespace MVCProject.Controllers
             Session["loggedOn"] = null;
             Session["LogoutStatus"] = null;
             Session["userType"] = null;
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult SubmitLogin(User user)
@@ -77,17 +92,18 @@ namespace MVCProject.Controllers
             UsersDal dal = new UsersDal();
             List<User> users = dal.users.ToList<User>();
             bool exists = false;
-            foreach(User u in users)
-                if(u.username == user.username && u.password == user.password)
+            foreach (User u in users)
+                if (u.username == user.username && u.password == user.password)
                 {
                     exists = true;
                     break;
                 }
             if (exists == true)
             {
+                FormsAuthentication.SetAuthCookie("cookie", true);
                 Session["username"] = user.username;
                 Session["loggedOn"] = "true";
-                TempData["LoginStatus"] = "";
+                TempData["LoginStatus"] = null;
                 Session["userType"] = "user";
                 return RedirectToAction("Index", "Home");
             }
@@ -114,7 +130,7 @@ namespace MVCProject.Controllers
                 Session["username"] = user.username;
                 Session["loggedOn"] = "true";
                 Session["userType"] = "admin";
-                TempData["LoginStatus"] = "";
+                TempData["LoginStatus"] = null;
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -126,6 +142,10 @@ namespace MVCProject.Controllers
 
         public ActionResult AdminTools()
         {
+            if (Session["userType"] == null || Session["userType"].ToString() != "admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -141,15 +161,41 @@ namespace MVCProject.Controllers
         {
             UsersDal dal = new UsersDal();
             UserViewModel uvm = new UserViewModel();
+            if (Request.Form["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string searchVal = Request.Form["username"].ToString();
             List<User> objUsers = (from x in dal.users
-                                           where x.username.Contains(searchVal)
-                                           select x).ToList<User>();
+                                   where x.username.Contains(searchVal)
+                                   select x).ToList<User>();
             User objUser = new User();
             objUser.username = searchVal;
             uvm.user = objUser;
             uvm.users = objUsers;
             return View(uvm);
         }
+
+        public ActionResult AddAdmin()
+        {
+            if (Session["userType"] != null && Session["userType"].ToString() == "admin")
+            {
+                return View(new Admin());
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult SubmitAdminRegister(Admin admin)
+        {
+            AdminsDal dal = new AdminsDal();
+            if (ModelState.IsValid)
+            {
+                dal.users.Add(admin);
+                dal.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View("AddAdmin", admin);
+        }
+
     }
 }

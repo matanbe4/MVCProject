@@ -1,13 +1,13 @@
-﻿@model MVCProject.Models.User
+﻿@model MVCProject.Models.Admin
 @using MVCProject.Models
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Add admin";
 }
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Register</title>
+    <title>@ViewBag.Title</title>
 
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
@@ -15,10 +15,10 @@
 
 </head>
 <body>
-    <h2>Register</h2>
+    <h2>@ViewBag.Title</h2>
     <br />
     <div>
-        @using (Html.BeginForm("SubmitRegister", "User", FormMethod.Post))
+        @using (Html.BeginForm("SubmitAdminRegister", "User", FormMethod.Post))
         {
             <table>
                 <tr>
@@ -31,12 +31,10 @@
                 </tr>
             </table>
             <br />
-            <h4 style="color:red">@TempData["LoginStatus"]</h4>
-            <br />
-            <br />
-            <input id="SubmitRegister" type="Submit" value="Register" />
+            <input id="SubmitAdminRegister" type="Submit" value="Add Admin" />
             <br />
         }
     </div>
 </body>
 </html>
+

@@ -1,0 +1,74 @@
+﻿@model MVCProject.ViewModel.ProductViewModel
+@using MVCProject.Models;
+@{
+    ViewBag.Title = "SearchProduct";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SearchProduct</title>
+    <style type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        .Grid {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+
+            .Grid th {
+                background-color: #F7F7F7;
+                font-weight: bold;
+            }
+
+            .Grid th, .Grid td {
+                padding: 5px;
+                border: 1px solid #ccc;
+            }
+
+            .Grid, .Grid table td {
+                border: 0px solid #ccc;
+            }
+
+                .Grid th a, .Grid th a:visited {
+                    color: #333;
+                }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="SearchProduct" method="post">
+            <br />
+            <table>
+                <tr>
+                    <td>Enter product to search:</td>
+                    <td><input id="Text" type="text" name="name" value="@Model.product.name" /></td>
+                </tr>
+                <tr>
+                    <td><input id="Submit" type="submit" value="Search" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <br />
+    <b>Search Results:</b>
+    <br />
+    <div>
+        @{
+            WebGrid obj = new WebGrid(Model.products, canPage: false, canSort: false);
+        }
+        @obj.GetHtml(htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+        columns: obj.Columns(
+                 obj.Column("Name", "Name"),
+                 obj.Column("Price", "Price")))
+    </div>
+    <br />
+    <h2>To order, please click on the "Contact" tab.</h2>
+
+</body>
+</html>

@@ -13,7 +13,5 @@ namespace MVCProject.Models
         public string name { get; set; }
         [Required]
         public double price{ get; set; }
-        [Required]
-        public int quantity{ get; set; }
     }
 }
