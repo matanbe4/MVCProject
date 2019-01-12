@@ -15,3 +15,9 @@
     <strong>To order, please contact:</strong><br /><a href="mailto:ranav@ac.sce.ac.il">Ran Avital</a><br />
     <a href="mailto:matanbe4@ac.sce.ac.il">Matan Benishty</a>
 </address>
+
+@if (Session["loggedOn"] != null)
+{
+    <h2>Got something to say? We would like to hear!</h2><br />
+    <h2>To write a review, click @Html.ActionLink("Here", "ReviewAction", "Home", null)</h2>
+}

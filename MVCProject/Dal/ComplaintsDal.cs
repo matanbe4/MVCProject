@@ -7,15 +7,16 @@ using System.Web;
 
 namespace MVCProject.Dal
 {
-    public class UsersDal : DbContext
+    public class ComplaintsDal : DbContext
     {
-        public DbSet<User> users { get; set; }
 
+        public DbSet<Complaint> complaints { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Complaint>().ToTable("Complaints");
         }
 
     }
+
 }

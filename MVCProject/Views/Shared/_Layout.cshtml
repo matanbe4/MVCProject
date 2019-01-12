@@ -34,6 +34,7 @@
                     @if (Session["userType"] != null)
                     {
                         <li>@Html.ActionLink("Shop", "ShopProducts", "Shop")</li>
+                        <li>@Html.ActionLink("Report", "Complain", "User")</li>
                         <li>@Html.ActionLink("Log out", "Logout", "User")</li>
 
                     }

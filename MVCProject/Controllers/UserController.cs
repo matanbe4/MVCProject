@@ -86,6 +86,7 @@ namespace MVCProject.Controllers
 
         public ActionResult LogoutAction()
         {
+            Session["username"] = null;
             Session["loggedOn"] = null;
             Session["LogoutStatus"] = null;
             Session["userType"] = null;
@@ -217,5 +218,68 @@ namespace MVCProject.Controllers
             return View("AddAdmin", admin);
         }
 
+        public ActionResult Complain()
+        {
+            if (Session["userType"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+        public ActionResult SubmitComplaint()
+        {
+            TempData["ComplaintSuccess"] = null;
+            TempData["ComplaintErr"] = null;
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if(Request.Form["complaintContent"] == null || Request.Form["complaintContent"].ToString().Length < 3)
+            {
+                TempData["ComplaintErr"] = "Report content must be 5 character or above";
+                return View("Complain");
+            }
+
+            Complaint compObj = new Complaint();
+            compObj.complaint = Request.Form["complaintContent"].ToString();
+            compObj.username = Session["username"].ToString();
+            ComplaintsDal dal = new ComplaintsDal();
+            try
+            {
+                dal.complaints.Add(compObj);
+                dal.SaveChanges();
+            }
+            catch (DbUpdateException e)
+            {
+                compObj.complaint += " .";
+                dal.complaints.Add(compObj);
+                dal.SaveChanges();
+            }
+            TempData["ComplaintSuccess"] = "Report added successfully.\nThe administrators can now improve the website, Thanks!";
+            return View("Complain");
+        }
+
+        public ActionResult ShowComplaints()
+        {
+            if (Session["userType"] == null || Session["userType"].ToString() == "user")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ComplaintViewModel cvm = new ComplaintViewModel();
+            cvm.complaints = (new ComplaintsDal()).complaints.ToList<Complaint>();
+            return View(cvm);
+        }
+
+        public ActionResult ShowReviews()
+        {
+            if (Session["userType"] == null || Session["userType"].ToString() == "user")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ReviewViewModel rvm = new ReviewViewModel();
+            rvm.reviews = (new ReviewsDal()).reviews.ToList<Review>();
+            return View(rvm);
+        }
     }
 }

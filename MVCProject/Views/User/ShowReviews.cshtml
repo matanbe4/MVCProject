@@ -1,7 +1,6 @@
-﻿@model MVCProject.ViewModel.UserViewModel
-@using MVCProject.Models;
+﻿@model MVCProject.ViewModel.ReviewViewModel
 @{
-    ViewBag.Title = "SearchUser";
+    ViewBag.Title = "Show Reviews";
 }
 
 <!DOCTYPE html>
@@ -9,7 +8,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Search User</title>
+    <title>Show Reviews</title>
     <style type="text/css">
         body {
             font-family: Arial;
@@ -41,31 +40,16 @@
     </style>
 </head>
 <body>
-    <div>
-        <form action="SearchUser" method="post">
-            <br />
-            <table>
-                <tr>
-                    <td>Enter Username to search:</td>
-                    <td><input id="Text" type="text" name="username" value="@Model.user.username" /></td>
-                </tr>
-                <tr>
-                    <td><input id="Submit" type="submit" value="Search User" /></td>
-                </tr>
-            </table>
-        </form>
-    </div>
-    <br />
-    <b>Search Results:</b>
+    <h3><b>Reviews:</b></h3>
     <br />
     <div>
         @{
-            WebGrid obj = new WebGrid(Model.users, canPage: false, canSort: false);
+            WebGrid obj = new WebGrid(Model.reviews, canPage: false, canSort: false);
         }
         @obj.GetHtml(htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
         columns: obj.Columns(
-                 obj.Column("Username", "Username"),
-                 obj.Column("Password", "Password")))
+                 obj.Column("Name", "Username"),
+                 obj.Column("Review", "Review")))
     </div>
 
 </body>

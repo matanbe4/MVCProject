@@ -1,0 +1,34 @@
+﻿@model MVCProject.ViewModel.ReviewViewModel
+@using MVCProject.Models
+@{
+    ViewBag.Title = "ReviewAction";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+</head>
+<body>
+    <div>
+        <h2>Please write your review below.</h2><br /><br />
+        @using (Html.BeginForm("AddReview", "Home", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td>Your review:  </td>
+                    <td>@Html.TextAreaFor(m => m.review.review, new { rows = "5", cols = "100" }) @Html.ValidationMessageFor(x => x.review.review) </td>
+                </tr>
+            </table>
+            <br />
+            <input id="AddReview" type="Submit" value="Send review" />
+            <br />
+        }
+    </div>
+</body>
+</html>

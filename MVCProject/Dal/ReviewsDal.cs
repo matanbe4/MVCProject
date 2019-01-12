@@ -1,21 +1,20 @@
-﻿using MVCProject.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
+using MVCProject.Models;
 
 namespace MVCProject.Dal
 {
-    public class UsersDal : DbContext
+    public class ReviewsDal : DbContext
     {
-        public DbSet<User> users { get; set; }
+        public DbSet<Review> reviews { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Review>().ToTable("Reviews");
         }
-
     }
 }
