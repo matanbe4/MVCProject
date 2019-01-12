@@ -13,7 +13,7 @@ namespace MVCProject.Models
         [StringLength(20, MinimumLength = 5, ErrorMessage = "Username must be 5 to 20 characters")]
         public string username { get; set; }
         [Required]
-        [StringLength(20, MinimumLength = 5, ErrorMessage = "Password must be 5 to 20 characters")]
+        [StringLength(65, MinimumLength = 5, ErrorMessage = "Password must be 5 to 65 characters")]
         public string password { get; set; }
     }
 }

@@ -10,6 +10,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using MVCProject.Classes;
+using System.Data.Entity.Validation;
 
 namespace MVCProject.Controllers
 {
@@ -32,10 +34,13 @@ namespace MVCProject.Controllers
         public ActionResult SubmitRegister(User user)
         {
             UsersDal dal = new UsersDal();
+            Encryption enc = new Encryption();
             if (ModelState.IsValid)
             {
                 try
                 {
+                    string hashedPassword = enc.CreateHash(user.password);
+                    user.password = hashedPassword;
                     dal.users.Add(user);
                     dal.SaveChanges();
                     TempData["LoginStatus"] = null;
@@ -91,9 +96,10 @@ namespace MVCProject.Controllers
         {
             UsersDal dal = new UsersDal();
             List<User> users = dal.users.ToList<User>();
+            Encryption enc = new Encryption();
             bool exists = false;
             foreach (User u in users)
-                if (u.username == user.username && u.password == user.password)
+                if (u.username == user.username && enc.ValidatePassword(user.password, u.password))
                 {
                     exists = true;
                     break;
@@ -118,9 +124,10 @@ namespace MVCProject.Controllers
         {
             AdminsDal dal = new AdminsDal();
             List<Admin> users = dal.users.ToList<Admin>();
+            Encryption enc = new Encryption();
             bool exists = false;
             foreach (Admin u in users)
-                if (u.username == user.username && u.password == user.password)
+                if (u.username == user.username && enc.ValidatePassword(user.password, u.password))
                 {
                     exists = true;
                     break;
@@ -189,10 +196,13 @@ namespace MVCProject.Controllers
         public ActionResult SubmitAdminRegister(Admin admin)
         {
             AdminsDal dal = new AdminsDal();
+            Encryption enc = new Encryption();
             if (ModelState.IsValid)
             {
                 try
                 {
+                    string hashedPassword = enc.CreateHash(admin.password);
+                    admin.password = hashedPassword;
                     dal.users.Add(admin);
                     dal.SaveChanges();
                     TempData["LoginStatus"] = null;
