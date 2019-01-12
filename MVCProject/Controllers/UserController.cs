@@ -127,6 +127,7 @@ namespace MVCProject.Controllers
                 }
             if (exists == true)
             {
+                FormsAuthentication.SetAuthCookie("cookie", true);
                 Session["username"] = user.username;
                 Session["loggedOn"] = "true";
                 Session["userType"] = "admin";

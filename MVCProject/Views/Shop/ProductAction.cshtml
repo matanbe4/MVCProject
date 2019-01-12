@@ -1,0 +1,80 @@
+﻿@model MVCProject.ViewModel.ProductViewModel
+@using MVCProject.Models;
+@{
+    ViewBag.Title = "ManageProducts";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ManageProducts</title>
+    <style type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        .Grid {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+
+            .Grid th {
+                background-color: #F7F7F7;
+                font-weight: bold;
+            }
+
+            .Grid th, .Grid td {
+                padding: 5px;
+                border: 1px solid #ccc;
+            }
+
+            .Grid, .Grid table td {
+                border: 0px solid #ccc;
+            }
+
+                .Grid th a, .Grid th a:visited {
+                    color: #333;
+                }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="ProductAction" method="post">
+            <br />
+            <table>
+                <tr>
+                    <td>Enter product name:</td>
+                    <td><input id="Text" type="text" name="name" value="@Model.product.name" /></td>
+                </tr>
+                <tr>
+                    <td>Enter product price:</td>
+                    <td><input id="Text" type="text" name="price" value="@Model.product.price" /></td>
+                </tr>
+                <tr>
+                    <td><input id="Submit" type="submit" value="Add product" /></td>
+                </tr>
+            </table>
+        </form>
+        <br />
+        <h4 style="color:red">@TempData["ProductErr"]</h4>
+        <br />
+    </div>
+    <br />
+    <b>Products table:</b>
+    <br />
+    <div>
+        @{
+            WebGrid obj = new WebGrid(Model.products, canPage: false, canSort: false);
+        }
+        @obj.GetHtml(htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+        columns: obj.Columns(
+                 obj.Column("Name", "Name"),
+                 obj.Column("Price", "Price")))
+    </div>
+    <br />
+
+</body>
+</html>
