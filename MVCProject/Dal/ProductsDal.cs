@@ -7,6 +7,7 @@ using System.Web;
 
 namespace MVCProject.Dal
 {
+    //A Data Access Layer to the Products Table.
     public class ProductsDal : DbContext
     {
         public DbSet<Product> products { get; set; }

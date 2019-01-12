@@ -6,6 +6,7 @@ using System.Web;
 
 namespace MVCProject.Models
 {
+    //A class that represents the Review option.
     public class Review
     {
         public string name { get; set; }

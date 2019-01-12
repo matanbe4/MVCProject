@@ -6,6 +6,7 @@ using MVCProject.Models;
 
 namespace MVCProject.ViewModel
 {
+    //A View Model for Products.
     public class ProductViewModel
     {
         public Product product{ get; set; }

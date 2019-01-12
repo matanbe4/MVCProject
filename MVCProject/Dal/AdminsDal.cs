@@ -6,7 +6,8 @@ using System.Linq;
 using System.Web;
 
 namespace MVCProject.Dal
-{
+{   
+    //A Data Access Layer to the Admins Table.
     public class AdminsDal : DbContext
     {
         public DbSet<Admin> users { get; set; }

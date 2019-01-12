@@ -11,9 +11,11 @@ using System.Threading;
 
 namespace MVCProject.Controllers
 {
+
     [Authorize]
     public class ShopController : Controller
     {
+        //Action that passes to the search products initialized arguments.
         public ActionResult ShopProducts()
         {
             ProductViewModel pvm = new ProductViewModel();
@@ -22,6 +24,7 @@ namespace MVCProject.Controllers
             return View("SearchProduct", pvm);
         }
 
+        //Action that passes the view a list of requested products.
         public ActionResult SearchProduct()
         {
             ProductsDal dal = new ProductsDal();
@@ -41,14 +44,20 @@ namespace MVCProject.Controllers
             return View(pvm);
         }
 
+        //Action that passes JSon file to the products search
         public ActionResult GetProductsByJason()
         {
+            if (Session["userType"] == null || Session["userType"].ToString() == "user")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ProductsDal dal = new ProductsDal();
-            //Thread.Sleep(2000);
+            //Thread.Sleep(2000); //For the Frontal check
             List<Product> objProducts = dal.products.ToList<Product>();
             return Json(objProducts, JsonRequestBehavior.AllowGet);
         }
 
+        //Action that manages products, passes to the productAction arguments.
         public ActionResult ManageProducts()
         {
             if (Session["userType"] == null || Session["userType"].ToString() != "admin")
@@ -61,6 +70,7 @@ namespace MVCProject.Controllers
             return View("ProductAction", pvm);
         }
 
+        //Action that Searches products and returns a list of requested products.
         public ActionResult ProductAction()
         {
             TempData["ProductErr"] = null;
@@ -73,7 +83,7 @@ namespace MVCProject.Controllers
                 return RedirectToAction("Index", "Home");
             }
             string newName = Request.Form["name"].ToString();
-            if(newName == "")
+            if (newName == "")
             {
                 TempData["ProductErr"] = "Please fill product name.";
                 return View(pvm);

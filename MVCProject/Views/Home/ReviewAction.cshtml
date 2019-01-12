@@ -21,14 +21,19 @@
         {
             <table>
                 <tr>
-                    <td>Your review:  </td>
-                    <td>@Html.TextAreaFor(m => m.review.review, new { rows = "5", cols = "100" }) @Html.ValidationMessageFor(x => x.review.review) </td>
+                    <td><h3>Your review:</h3></td>
+                </tr>
+                <tr>
+                    <td>@Html.TextAreaFor(m => m.review.review, new { rows = "4", cols = "450" }) @Html.ValidationMessageFor(x => x.review.review) </td>
                 </tr>
             </table>
             <br />
             <input id="AddReview" type="Submit" value="Send review" />
             <br />
+            <br />
+            <br />
         }
+        <IMG SRC="http://image.blingee.com/images10/content/output/2007/4/10/83517111_e38f50fb.gif" />
     </div>
 </body>
 </html>

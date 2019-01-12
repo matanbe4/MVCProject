@@ -6,6 +6,7 @@ using System.Web;
 
 namespace MVCProject.Models
 {
+    //A class that represents the Report option.
     public class Complaint
     {
         [Required]

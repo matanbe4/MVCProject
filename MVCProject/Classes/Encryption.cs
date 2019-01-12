@@ -6,6 +6,7 @@ using System.Web;
 
 namespace MVCProject.Classes
 {
+    //A Class that allows to encrypt the passwords.
     public class Encryption
     {
         public const int SALT_SIZE = 24;
@@ -40,7 +41,7 @@ namespace MVCProject.Classes
             }
             return diff == 0;
         }
-
+        //Checks if the not encrypt password is equals to the encrypted one.
         public bool ValidatePassword(string password, string dbHash)
         {
             char[] delimiter = { ':' };

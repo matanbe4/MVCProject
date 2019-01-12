@@ -7,6 +7,7 @@ using MVCProject.Models;
 
 namespace MVCProject.Dal
 {
+    //A Data Access Layer to the Reviews Table.
     public class ReviewsDal : DbContext
     {
         public DbSet<Review> reviews { get; set; }

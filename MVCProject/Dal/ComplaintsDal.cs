@@ -7,6 +7,7 @@ using System.Web;
 
 namespace MVCProject.Dal
 {
+    //A Data Access Layer to the Complaints Table.
     public class ComplaintsDal : DbContext
     {
 

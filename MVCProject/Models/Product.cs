@@ -6,6 +6,7 @@ using System.Web;
 
 namespace MVCProject.Models
 {
+    //A class that represents the products of the shop.
     public class Product
     {   
         [Key]

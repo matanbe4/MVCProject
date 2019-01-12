@@ -6,6 +6,7 @@ using MVCProject.Models;
 
 namespace MVCProject.ViewModel
 {
+    //A View Model for Reviews.
     public class ReviewViewModel
     {
         public Review review { get; set; }

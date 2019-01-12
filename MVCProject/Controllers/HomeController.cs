@@ -9,6 +9,7 @@ using MVCProject.Dal;
 
 namespace MVCProject.Controllers
 {
+    //Controller that controlls on the general options on the website.
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -30,10 +31,13 @@ namespace MVCProject.Controllers
             return View();
         }
 
+        //Action to add a review to the website.
         public ActionResult ReviewAction()
         {
             return View(new ReviewViewModel());
         }
+
+        //Action that adds the review to the DB.
         public ActionResult AddReview(ReviewViewModel rev)
         {
             if (Session["username"] == null)

@@ -6,6 +6,7 @@ using System.Web;
 
 namespace MVCProject.ViewModel
 {
+    //A View Model for Users.
     public class UserViewModel
     {
         public User user { get; set; }

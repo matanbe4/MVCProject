@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MVCProject.Models
 {
+    //A class that represents the Administrator user.
     public class Admin
     {
         [Key]

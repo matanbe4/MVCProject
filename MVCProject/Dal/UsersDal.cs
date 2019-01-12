@@ -9,6 +9,7 @@ namespace MVCProject.Dal
 {
     public class UsersDal : DbContext
     {
+        //A Data Access Layer to the Users Table.
         public DbSet<User> users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
